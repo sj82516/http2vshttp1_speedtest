@@ -39,11 +39,13 @@ html(lang="en")
     
 `
 
-// 大圖測試
-app.get('/:size', function (req, res) {
+// 返回html file
+// size為big / sm ，前者為500kb圖檔，後者為50kb圖檔
+// amount，圖片數量
+app.get('/:size/:amount', function (req, res) {
     let size = req.params["size"]
     let testName = size == "big" ? "大圖加載測試" : "小圖加載測試"
-    let amount = Array(250).fill(0)
+    let amount = Array(+req.params["amount"]).fill(0)
     res.send(
         pug.render(pugContent, {
             testName,
@@ -59,6 +61,6 @@ const options = {
 };
 
 // 以下兩者擇一開啟
-// https.createServer(options, app).listen(3000);
+// https.createServer(options, app).listen(443);
 
-spdy.createServer(options, app).listen(3000);
+spdy.createServer(options, app).listen(443);
